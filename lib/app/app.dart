@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:magicbox_app/app/providers.dart';
 import 'package:magicbox_app/app/router.dart';
 import 'package:magicbox_app/shared/theme/app_theme.dart';
 
@@ -9,10 +10,13 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    final config = ref.watch(configProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.theme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: config.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       routerConfig: router,
     );
   }
