@@ -22,9 +22,8 @@ class AuthLayout extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/logo.png',
-                width: 120,
-                height: 120,
+                'assets/icons/splash_screen_icon.png',
+                height: 300,
               ),
               const SizedBox(height: 32),
               Padding(

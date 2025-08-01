@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicbox_app/app/providers.dart';
 import 'package:magicbox_app/features/auth/data/auth_api.dart';
 import 'package:magicbox_app/features/auth/data/auth_models.dart';
+import 'package:magicbox_app/shared/widgets/app_button.dart';
+import 'package:magicbox_app/shared/widgets/app_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +28,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         password: _passwordController.text,
       ));
 
+      print(response);
+
       await ref.read(authNotifierProvider.notifier)
           .login(response.accessToken, response.refreshToken);
 
@@ -37,7 +41,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         SnackBar(content: Text('Login error: $e')),
       );
     }
-    // No usar return en finally
     if (mounted) {
       setState(() => _loading = false);
     }
@@ -46,24 +49,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(controller: _emailController, decoration: const InputDecoration(labelText: 'Email')),
-              TextField(controller: _passwordController, obscureText: true, decoration: const InputDecoration(labelText: 'Password')),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _loading ? null : _handleLogin,
-                child: _loading ? const CircularProgressIndicator() : const Text('Login'),
-              ),
-            ],
-          ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AppTextField(label: 'Email', controller: _emailController),
+        const SizedBox(height: 16),
+        AppTextField(label: 'Password', controller: _passwordController, obscureText: true),
+        const SizedBox(height: 20),
+        AppButton(
+          label: _loading ? '...' : 'Login',
+          onPressed: _loading ? () {} : _handleLogin,
         ),
-      ),
+      ],
     );
   }
 }

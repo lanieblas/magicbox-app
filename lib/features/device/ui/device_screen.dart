@@ -5,8 +5,8 @@ class DeviceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Device Screen')),
+    return const Center(
+      child: Text('Device Screen'),
     );
   }
 }
