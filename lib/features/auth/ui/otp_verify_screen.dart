@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:magicbox_app/shared/widgets/app_button.dart';
 import 'package:magicbox_app/shared/widgets/app_text_field.dart';
 
-class RecoverPasswordScreen extends StatefulWidget {
-  const RecoverPasswordScreen({super.key});
+class OtpVeiryScreen extends StatefulWidget {
+  const OtpVeiryScreen({super.key});
 
   @override
-  State<RecoverPasswordScreen> createState() => _RecoverPasswordScreenState();
+  State<OtpVeiryScreen> createState() => _OtpVeiryScreenState();
 }
 
-class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
-  final _emailController = TextEditingController();
+class _OtpVeiryScreenState extends State<OtpVeiryScreen> {
+  final _otpController = TextEditingController();
   bool _loading = false;
 
-  void _handleRecover() {
+  void _handleConfirm() {
     setState(() => _loading = true);
-    // Aquí deberías llamar al API real
+    // Aquí deberías validar el OTP con el backend
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         setState(() => _loading = false);
-        // Navegar o mostrar mensaje
+        // Si es válido, ir a login
       }
     });
   }
@@ -29,11 +29,11 @@ class _RecoverPasswordScreenState extends State<RecoverPasswordScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AppTextField(label: 'Email', controller: _emailController),
+        AppTextField(label: 'Código OTP', controller: _otpController),
         const SizedBox(height: 20),
         AppButton(
-          label: _loading ? '...' : 'Enviar',
-          onPressed: _loading ? () {} : _handleRecover,
+          label: _loading ? '...' : 'Validar',
+          onPressed: _loading ? () {} : _handleConfirm,
         ),
       ],
     );

@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:magicbox_app/app/providers.dart';
 import 'package:magicbox_app/app/states/auth_state.dart';
 import 'package:magicbox_app/core/constants/route_names.dart';
-import 'package:magicbox_app/features/auth/ui/confirm_otp_screen.dart';
+import 'package:magicbox_app/features/auth/ui/otp_verify_screen.dart';
 import 'package:magicbox_app/features/auth/ui/login_screen.dart';
-import 'package:magicbox_app/features/auth/ui/recover_password_screen.dart';
+import 'package:magicbox_app/features/auth/ui/password_forgot_screen.dart';
 import 'package:magicbox_app/features/device/ui/device_screen.dart';
 import 'package:magicbox_app/features/error/ui/error_screen.dart';
 import 'package:magicbox_app/shared/layout/auth_layout.dart';
@@ -31,12 +31,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, __) => const LoginScreen(),
           ),
           GoRoute(
-            path: RouteNames.recoverPassword,
-            builder: (_, __) => const RecoverPasswordScreen(),
+            path: RouteNames.passwordForgot,
+            builder: (_, __) => const PasswordForgotScreen(),
           ),
           GoRoute(
-            path: RouteNames.confirmOtp,
-            builder: (_, __) => const ConfirmOtpScreen(),
+            path: RouteNames.otpVerify,
+            builder: (_, __) => const OtpVeiryScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.passwordConfirm,
+            builder: (_, __) => const PasswordForgotScreen(),
           ),
         ],
       ),

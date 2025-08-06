@@ -33,7 +33,7 @@ class MainLayout extends ConsumerWidget {
                         ref
                             .read(configProvider.notifier)
                             .toggleDarkMode(value);
-                        Navigator.pop(context); // Cierra el menú
+                        Navigator.pop(context);
                       },
                     ),
                   ],
