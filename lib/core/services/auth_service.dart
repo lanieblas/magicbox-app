@@ -8,24 +8,43 @@ class AuthService {
 
   AuthService(Ref ref);
 
-  Future<void> saveToken(String token, String refreshToken) async {
-    await _storage.write(StorageKeys.accessToken, token);
-    await _storage.write(StorageKeys.refreshToken, refreshToken);
+  Future<void> saveTokenAndUserData(
+      String accessToken,
+      String refreshToken,
+      String userId,
+      String identityId,
+      String firstName,
+      String lastName,
+      String email,
+      String imageUrl,
+      String userType,
+      ) async {
+    await Future.wait([
+      _storage.write(StorageKeys.accessToken, accessToken),
+      _storage.write(StorageKeys.refreshToken, refreshToken),
+      _storage.write(StorageKeys.userId, userId),
+      _storage.write(StorageKeys.identityId, identityId),
+      _storage.write(StorageKeys.firstName, firstName),
+      _storage.write(StorageKeys.lastName, lastName),
+      _storage.write(StorageKeys.email, email),
+      _storage.write(StorageKeys.imageUrl, imageUrl),
+      _storage.write(StorageKeys.userType, userType),
+    ]);
   }
 
-  Future<String?> getAccessToken() async {
-    return await _storage.read(StorageKeys.accessToken);
-  }
-
-  Future<String?> getRefreshToken() async {
-    return await _storage.read(StorageKeys.refreshToken);
-  }
+  Future<String?> getAccessToken() async => await _storage.read(StorageKeys.accessToken);
+  Future<String?> getRefreshToken() async => await _storage.read(StorageKeys.refreshToken);
+  Future<String?> getUserId() async => await _storage.read(StorageKeys.userId);
+  Future<String?> getIdentityId() async => await _storage.read(StorageKeys.identityId);
+  Future<String?> getFirstName() async => await _storage.read(StorageKeys.firstName);
+  Future<String?> getLastName() async => await _storage.read(StorageKeys.lastName);
+  Future<String?> getEmail() async => await _storage.read(StorageKeys.email);
+  Future<String?> getImageUrl() async => await _storage.read(StorageKeys.imageUrl);
+  Future<String?> getUserType() async => await _storage.read(StorageKeys.userType);
 
   Future<void> clearToken() async {
     await _storage.clear();
   }
 
-  bool isTokenExpired(String token) {
-    return JwtDecoder.isExpired(token);
-  }
+  bool isTokenExpired(String token) => JwtDecoder.isExpired(token);
 }

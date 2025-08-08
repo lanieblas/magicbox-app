@@ -1,3 +1,5 @@
+import 'models/auth_user.dart';
+
 class LoginRequest {
   final String email;
   final String password;
@@ -11,19 +13,13 @@ class LoginRequest {
 }
 
 class LoginResponse {
-  final String accessToken;
-  final String refreshToken;
+  final AuthUser user;
 
-  LoginResponse({
-    required this.accessToken,
-    required this.refreshToken,
-  });
+  LoginResponse({required this.user});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as Map<String, dynamic>;
-    return LoginResponse(
-      accessToken: data['access_token'] as String,
-      refreshToken: data['refresh_token'] as String,
-    );
+    final authUser = AuthUser.fromJson(data);
+    return LoginResponse(user: authUser);
   }
 }

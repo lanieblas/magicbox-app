@@ -6,7 +6,7 @@ import 'package:magicbox_app/core/constants/route_names.dart';
 import 'package:magicbox_app/features/auth/ui/otp_verify_screen.dart';
 import 'package:magicbox_app/features/auth/ui/login_screen.dart';
 import 'package:magicbox_app/features/auth/ui/password_forgot_screen.dart';
-import 'package:magicbox_app/features/device/ui/device_screen.dart';
+import 'package:magicbox_app/features/devices/ui/devices_screen.dart';
 import 'package:magicbox_app/features/error/ui/error_screen.dart';
 import 'package:magicbox_app/shared/layout/auth_layout.dart';
 import 'package:magicbox_app/shared/layout/main_layout.dart';
@@ -50,14 +50,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: RouteNames.devices,
-            builder: (_, __) => const DeviceScreen(),
+            builder: (_, __) => const DevicesScreen(),
           ),
         ],
       ),
 
       GoRoute(
         path: RouteNames.error,
-        builder: (_, __) => const ErrorScreen(),
+        builder: (_, state) {
+          final errorState = ref.read(errorStateProvider);
+          return ErrorScreen(
+            error: errorState.error,
+          );
+        },
       ),
     ],
     errorBuilder: (_, __) => const ErrorScreen(),

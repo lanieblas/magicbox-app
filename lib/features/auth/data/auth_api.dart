@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:magicbox_app/core/constants/api_endpoints.dart';
-import 'package:magicbox_app/core/exceptions/api_exception.dart';
+import 'package:magicbox_app/core/exceptions/app_exceptions.dart';
 import 'package:magicbox_app/features/auth/data/auth_models.dart';
 
 class AuthApi {
@@ -14,6 +14,16 @@ class AuthApi {
       return LoginResponse.fromJson(response.data);
     } on DioException catch (e) {
       final msg = e.response?.data['message'] ?? 'Login failed';
+      final code = e.response?.statusCode;
+      throw ApiException(msg, code);
+    }
+  }
+
+  Future<void> logout(String refreshToken) async {
+    try {
+      await dio.post(ApiEndpoints.logout, data: {'refresh_token': refreshToken});
+    } on DioException catch (e) {
+      final msg = e.response?.data['message'] ?? 'Logout failed';
       final code = e.response?.statusCode;
       throw ApiException(msg, code);
     }

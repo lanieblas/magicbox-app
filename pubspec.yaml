@@ -15,6 +15,8 @@ dependencies:
   go_router: ^16.0.0
   dio: ^5.8.0+1
   flutter_riverpod: ^3.0.0-dev.15
+  flutter_reactive_ble: ^5.4.0
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:

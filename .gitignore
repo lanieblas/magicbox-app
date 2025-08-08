@@ -45,3 +45,5 @@ app.*.map.json
 /android/app/release
 /contenido_lib.sh
 /contenido_lib.txt
+/lib/estructura.txt
+/lib/print_tree.sh

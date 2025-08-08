@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:magicbox_app/app/providers.dart';
-import 'package:magicbox_app/core/exceptions/api_exception.dart';
+import 'package:magicbox_app/core/exceptions/app_exceptions.dart';
 import 'package:magicbox_app/features/auth/data/auth_api.dart';
 import 'package:magicbox_app/features/auth/data/auth_models.dart';
 import 'package:magicbox_app/shared/widgets/app_button.dart';
@@ -29,8 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         password: _passwordController.text,
       ));
 
-      await ref.read(authNotifierProvider.notifier)
-          .login(response.accessToken, response.refreshToken);
+      await ref.read(authNotifierProvider.notifier).login(response);
 
       if (!mounted) return;
 
