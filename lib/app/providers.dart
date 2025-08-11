@@ -7,7 +7,7 @@ import 'package:magicbox_app/app/states/config/config_state.dart';
 import 'package:magicbox_app/app/states/error_state.dart';
 import 'package:magicbox_app/core/network/dio_client.dart';
 import 'package:magicbox_app/core/services/auth_service.dart';
-import 'package:magicbox_app/core/services/ble_service.dart';
+import 'package:magicbox_app/ble/data/ble_service.dart';
 import 'package:magicbox_app/core/storage/preferences_storage.dart';
 import 'package:magicbox_app/features/auth/data/auth_api.dart';
 import 'package:magicbox_app/features/auth/logic/auth_notifier.dart';

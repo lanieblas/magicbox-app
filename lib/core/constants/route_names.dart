@@ -6,6 +6,4 @@ abstract class RouteNames {
   static const String passwordConfirm = '/password_confirm';
   static const String devices = '/devices';
   static const String error = '/error';
-
-  static const String deviceDetails = 'details';
 }

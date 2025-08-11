@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:magicbox_app/core/exceptions/app_exceptions.dart';
-import 'package:magicbox_app/core/models/ble_device.dart';
+import 'package:magicbox_app/ble/models/ble_device.dart';
 
 class BleService {
   final FlutterReactiveBle _ble;

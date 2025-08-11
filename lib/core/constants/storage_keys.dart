@@ -9,6 +9,4 @@ abstract class StorageKeys {
   static const String email = 'email';
   static const String imageUrl = 'image_url';
   static const String userType = 'user_type';
-
-  static const String themeMode = 'theme_mode';
 }

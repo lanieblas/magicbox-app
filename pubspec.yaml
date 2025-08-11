@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: ^3.0.0-dev.15
   flutter_reactive_ble: ^5.4.0
   permission_handler: ^12.0.1
+  logger: ^2.6.1
 
 dev_dependencies:
   flutter_test:

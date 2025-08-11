@@ -36,7 +36,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.otpVerify,
-            builder: (_, __) => const OtpVeiryScreen(),
+            builder: (_, __) => const OtpVerifyScreen(),
           ),
           GoRoute(
             path: RouteNames.passwordConfirm,

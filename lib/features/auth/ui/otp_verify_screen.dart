@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:magicbox_app/shared/widgets/app_button.dart';
 import 'package:magicbox_app/shared/widgets/app_text_field.dart';
 
-class OtpVeiryScreen extends StatefulWidget {
-  const OtpVeiryScreen({super.key});
+class OtpVerifyScreen extends StatefulWidget {
+  const OtpVerifyScreen({super.key});
 
   @override
-  State<OtpVeiryScreen> createState() => _OtpVeiryScreenState();
+  State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
 }
 
-class _OtpVeiryScreenState extends State<OtpVeiryScreen> {
+class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final _otpController = TextEditingController();
   bool _loading = false;
 

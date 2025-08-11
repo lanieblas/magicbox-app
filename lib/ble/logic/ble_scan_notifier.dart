@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:magicbox_app/app/providers.dart';
-import 'package:magicbox_app/core/models/ble_device.dart';
-import 'package:magicbox_app/core/services/ble_service.dart';
+import 'package:magicbox_app/ble/models/ble_device.dart';
+import 'package:magicbox_app/ble/data/ble_service.dart';
 
 final bleScanProvider = StateNotifierProvider<BleScanNotifier, List<BleDevice>>((ref) {
   return BleScanNotifier(ref.watch(bleServiceProvider));
