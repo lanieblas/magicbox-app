@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -8,39 +9,44 @@ import '../constants/storage_keys.dart';
 import '../logger/app_logger.dart';
 import '../storage/secure_storage_service.dart';
 
-/// Logs de tráfico HTTP (simple y alineado con AppLogger.i/w/e)
+/// Logs de tráfico HTTP.
+/// - En debug: incluye data (útil para desarrollo).
+/// - En release: NO incluye data para evitar filtrar información sensible.
 class TrafficLogInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final logData = !kReleaseMode ? ' | data=${options.data}' : '';
     AppLogger.i(
-        'HTTP → ${options.method} ${options.baseUrl}${options.path} '
-            '| query=${options.queryParameters} '
-            '| data=${options.data}');
+      'HTTP → ${options.method} ${options.baseUrl}${options.path} '
+          '| query=${options.queryParameters}$logData',
+    );
     handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
+    final logData = !kReleaseMode ? ' | data=${response.data}' : '';
     AppLogger.i(
-        'HTTP ← ${response.statusCode} ${response.requestOptions.baseUrl}${response.requestOptions.path} '
-            '| data=${response.data}');
+      'HTTP ← ${response.statusCode} ${response.requestOptions.baseUrl}${response.requestOptions.path}$logData',
+    );
     handler.next(response);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final ro = err.requestOptions;
+    final logData = !kReleaseMode ? ' | data=${err.response?.data}' : '';
     AppLogger.e(
-        'HTTP ✖ ${ro.method} ${ro.baseUrl}${ro.path} '
-            '| status=${err.response?.statusCode} '
-            '| msg=${err.message} '
-            '| data=${err.response?.data}');
+      'HTTP ✖ ${ro.method} ${ro.baseUrl}${ro.path} '
+          '| status=${err.response?.statusCode} '
+          '| msg=${err.message}$logData',
+    );
     handler.next(err);
   }
 }
 
 /// Interceptor que agrega Authorization y maneja refresh en 401.
-/// Usa Options(extra: {'skipAuth': true}) para saltarse auth (login/refresh).
+/// Usa Options(extra: {'skipAuth': true}) para saltarse auth (login/refresh/logout).
 class AuthInterceptor extends Interceptor {
   final Dio _dio;
   final SecureStorageService _storage;
@@ -57,13 +63,17 @@ class AuthInterceptor extends Interceptor {
     final extra = opts.extra;
     final skip = extra['skipAuth'] == true;
     final isRefresh = opts.path.endsWith(ApiEndpoints.refreshToken);
+    // NOTA: Para /logout ya enviamos skipAuth=true desde AuthApi, por eso no
+    // es necesario listar el endpoint aquí.
     return skip || isRefresh;
   }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      if (_shouldSkipAuth(options)) return handler.next(options);
+      if (_shouldSkipAuth(options)) {
+        return handler.next(options);
+      }
 
       final access = await _storage.read(StorageKeys.accessToken);
       if (access != null && access.isNotEmpty) {

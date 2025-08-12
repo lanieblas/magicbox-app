@@ -1,32 +1,31 @@
 import 'package:dio/dio.dart';
 import 'package:magicbox_app/core/constants/api_endpoints.dart';
-import 'package:magicbox_app/core/exceptions/app_exceptions.dart';
 import 'package:magicbox_app/features/auth/data/auth_models.dart';
 
 class AuthApi {
-  final Dio dio;
-
-  AuthApi(this.dio);
+  final Dio _dio;
+  AuthApi(this._dio);
 
   Future<LoginResponse> login(LoginRequest request) async {
-    try {
-      final response = await dio.post(ApiEndpoints.login, data: request.toJson());
-      return LoginResponse.fromJson(response.data);
-    } on DioException catch (e) {
-      final msg = e.response?.data['message'] ?? 'Login failed';
-      final code = e.response?.statusCode;
-      throw ApiException(msg, code);
-    }
+    final res = await _dio.post(
+      ApiEndpoints.login,
+      data: {
+        'email': request.email,
+        'password': request.password,
+      },
+      options: Options(extra: {'skipAuth': true}), // login no lleva bearer
+    );
+
+    final body = res.data;
+    return LoginResponse.fromJson(body['data']);
   }
 
+  /// Logout a nivel backend: NO debe llevar bearer ni gatillar refresh.
   Future<void> logout(String refreshToken) async {
-    try {
-      await dio.post(ApiEndpoints.logout, data: {'refresh_token': refreshToken});
-    } on DioException catch (e) {
-      final msg = e.response?.data['message'] ?? 'Logout failed';
-      final code = e.response?.statusCode;
-      throw ApiException(msg, code);
-    }
+    await _dio.post(
+      ApiEndpoints.logout,
+      data: {'refresh_token': refreshToken},
+      options: Options(extra: {'skipAuth': true}),
+    );
   }
 }
-

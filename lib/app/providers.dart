@@ -8,6 +8,7 @@ import 'package:magicbox_app/app/states/error_state.dart';
 import 'package:magicbox_app/core/network/dio_client.dart';
 import 'package:magicbox_app/core/services/auth_service.dart';
 import 'package:magicbox_app/ble/data/ble_service.dart';
+import 'package:magicbox_app/core/services/permission_service.dart';
 import 'package:magicbox_app/core/storage/preferences_storage.dart';
 import 'package:magicbox_app/core/storage/secure_storage_service.dart';
 import 'package:magicbox_app/features/auth/data/auth_api.dart';
@@ -48,5 +49,8 @@ final userNotifierProvider = StateNotifierProvider<UserNotifier, User?>((ref) {
   return UserNotifier(authService);
 });
 
+final permissionServiceProvider = Provider((ref) => PermissionService());
+
 final flutterReactiveBleProvider = Provider<FlutterReactiveBle>((ref) => FlutterReactiveBle());
+
 final bleServiceProvider = Provider<BleService>((ref) => BleService(ref.watch(flutterReactiveBleProvider)));

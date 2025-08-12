@@ -10,6 +10,13 @@ class ErrorState {
 
   factory ErrorState.initial() => const ErrorState(hasError: false);
 
+  /// Error de autorización por rol (gate)
+  factory ErrorState.authRoleDenied() => ErrorState(
+    hasError: true,
+    // 403 semántico; usa tus excepciones tipadas ya existentes
+    error: ForbiddenException('Tu perfil no tiene acceso a esta aplicación.'),
+  );
+
   ErrorState copyWith({bool? hasError, AppException? error}) {
     return ErrorState(
       hasError: hasError ?? this.hasError,

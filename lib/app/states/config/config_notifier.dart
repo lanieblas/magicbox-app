@@ -12,7 +12,7 @@ class ConfigNotifier extends StateNotifier<ConfigState> {
 
   Future<void> _loadPreferences() async {
     final isDark = await _storage.getBool(PreferencesKeys.themeMode) ?? false;
-    state = state.copyWith(isDarkMode: isDark);
+    state = state.copyWith(isDarkMode: isDark, ready: true);
   }
 
   Future<void> toggleDarkMode(bool value) async {
