@@ -9,13 +9,21 @@ import 'package:magicbox_app/core/network/dio_client.dart';
 import 'package:magicbox_app/core/services/auth_service.dart';
 import 'package:magicbox_app/ble/data/ble_service.dart';
 import 'package:magicbox_app/core/storage/preferences_storage.dart';
+import 'package:magicbox_app/core/storage/secure_storage_service.dart';
 import 'package:magicbox_app/features/auth/data/auth_api.dart';
 import 'package:magicbox_app/features/auth/logic/auth_notifier.dart';
 import 'package:magicbox_app/features/user/logic/user_notifier.dart';
 
 final authServiceProvider = Provider((ref) => AuthService(ref));
 
-final dioClientProvider = Provider((ref) => DioClient(ref));
+final secureStorageProvider = Provider<SecureStorageService>(
+      (ref) => SecureStorageService(),
+);
+
+final dioClientProvider = Provider<DioClient>((ref) {
+  final storage = ref.read(secureStorageProvider);
+  return DioClient(storage: storage); // <-- importante: storage:
+});
 
 final preferencesStorageProvider = Provider((ref) => PreferencesStorage());
 

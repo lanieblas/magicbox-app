@@ -5,7 +5,7 @@ import 'package:magicbox_app/core/logger/app_logger.dart';
 import 'package:magicbox_app/core/storage/secure_storage_service.dart';
 
 class AuthService {
-  final SecureStorage _storage = SecureStorage();
+  final SecureStorageService _storage = SecureStorageService();
 
   AuthService(Ref ref);
 
